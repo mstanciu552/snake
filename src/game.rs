@@ -6,6 +6,9 @@ extern crate piston;
 use crate::Fruit;
 use crate::Snake;
 use crate::DIR;
+use graphics::Transformed;
+use opengl_graphics::GlyphCache;
+use opengl_graphics::TextureSettings;
 
 use opengl_graphics::GlGraphics;
 
@@ -26,6 +29,8 @@ impl Game {
         });
         self.snake.render(&mut self.gl, arg);
         self.fruit.render(&mut self.gl, arg);
+        // self.draw_text(arg);
+        println!("{}", self.snake.get_score());
     }
 
     pub fn update(&mut self) {
@@ -43,5 +48,19 @@ impl Game {
             &Button::Keyboard(Key::Left) if last_dir != DIR::RIGHT => DIR::LEFT,
             _ => last_dir,
         }
+    }
+
+    pub fn draw_text(&mut self, arg: &RenderArgs) {
+        let font =
+            "C:/Users/mstan/Documents/Fonts/FiraCode/'Fura Code Regular Nerd Font Complete.ttf'";
+        let mut glyphs = GlyphCache::new(font, (), TextureSettings::new()).unwrap();
+        self.gl.draw(arg.viewport(), |c, gl| {
+            let transform = c.transform.trans(10.0, 100.0);
+            const BLACK: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+            const SIZE: u32 = 32;
+            graphics::text::Text::new_color(BLACK, SIZE)
+                .draw("Hello world!", &mut glyphs, &c.draw_state, transform, gl)
+                .unwrap();
+        });
     }
 }

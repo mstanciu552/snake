@@ -46,6 +46,25 @@ impl Snake {
 
         self.body.push_front(new_head);
         self.body.pop_back().unwrap();
+        self.check_boundary();
+    }
+
+    pub fn get_score(&self) -> usize {
+        self.body.len()
+    }
+
+    pub fn check_boundary(&mut self) {
+        self.body.iter_mut().for_each(|(x, y)| {
+            if x < &mut 0 {
+                *x += 35;
+            } else if x > &mut 35 {
+                *x -= 36;
+            } else if y < &mut 0 {
+                *y += 35;
+            } else if y > &mut 35 {
+                *y -= 36;
+            }
+        });
     }
 
     pub fn check_collision(&mut self, fruit: &mut Fruit) {
