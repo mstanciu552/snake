@@ -30,7 +30,7 @@ impl Game {
         self.snake.render(&mut self.gl, arg);
         self.fruit.render(&mut self.gl, arg);
         // self.draw_text(arg);
-        println!("{}", self.snake.get_score());
+        println!("Score: {}", self.snake.get_score());
     }
 
     pub fn update(&mut self) {

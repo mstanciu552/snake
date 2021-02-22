@@ -3,6 +3,7 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
+use crate::piston::window::AdvancedWindow;
 use glutin_window::GlutinWindow;
 use opengl_graphics::{GlGraphics, OpenGL};
 use piston::event_loop::*;
@@ -56,6 +57,7 @@ fn main() {
         }
         if let Some(_u) = e.update_args() {
             game.update();
+            window.set_title(format!("Snake Game | Score: {}", game.snake.get_score()));
         }
 
         if let Some(k) = e.button_args() {
